@@ -11,7 +11,7 @@
 
 ## Factories vs Fixtures
 
-####With fixtures...
+##### With fixtures...
 ```ruby
 # users.yaml
 marko:
@@ -43,7 +43,7 @@ describe "#show" do
 end
 ```
 
-####With factories...
+##### With factories...
 ```ruby
 # spec/factories/user.rb
 FactoryGirl.define do
