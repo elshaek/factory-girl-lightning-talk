@@ -13,7 +13,7 @@
 
 #### With fixtures...
 ```ruby
-# users.yaml
+# users.yml
 marko:
   first_name: Marko
   last_name: Anastasov
@@ -58,7 +58,7 @@ used in test:
 ```ruby
 describe User do
   it "has a first name" do
-    user = create(:user, first_name: "Marko", last_name: "Anastasov", phone: "555-123-6788")
+    user = FactoryGirl.create(:user, first_name: "Marko", last_name: "Anastasov", phone: "555-123-6788")
     user.first_name.should eql("Marko")
   end
 end
