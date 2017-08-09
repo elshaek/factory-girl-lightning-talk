@@ -4,7 +4,7 @@
 - Customization when instantiating objects
 - Used in place of fixtures
 
-* Fixtures: predefined sample data used for testing; 
+- Fixtures: predefined sample data used for testing; 
             independent of database; 
             written in YAML (YAML Ain't Markup Language).
 
@@ -66,8 +66,8 @@ end
 - We know how user is set up
 - Can generate an instance and test it without having to remember details of predefined data
 - Note: build vs create
-    + Using FactoryGirl.build(:factory_name) does not persist to the db and does not call save!, so your ActiveRecord validations will not run. This is much faster, but validations might be important.
-    + Using FactoryGirl.create(:factory_name) will persist to the db and will call ActiveRecord validations. This is obviously slower but can catch validation errors (if you care about them in your tests).
+    + Using FactoryGirl.build(:factory_name) does not persist to the db and does not call save!, so the ActiveRecord validations will not run: faster, but no validations
+    + Using FactoryGirl.create(:factory_name) will persist to the db and will call ActiveRecord validations: slower but can catch validation errors
 
 
 
