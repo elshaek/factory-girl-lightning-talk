@@ -69,7 +69,65 @@ end
     + Using FactoryGirl.build(:factory_name) does not persist to the db and does not call save!, so the ActiveRecord validations will not run: faster, but no validations
     + Using FactoryGirl.create(:factory_name) will persist to the db and will call ActiveRecord validations: slower but can catch validation errors
 
+#### Using Factories
+```ruby
+# Returns a User instance that's not saved
+# ActiveRecord validations will not run: faster, but no validations
+user = FactoryGirl.build(:user)
 
+# Returns a saved User instances
+# will persist to the db and will call ActiveRecord validations: slower but can catch validation errors
+user = FactoryGirl.create(:user)
+
+# Returns a hash of attributes that can be used to build a User instance
+attrs = FactoryGirl.attributes_for(:user)
+
+# Returns an object with all defined attributes stubbed out
+stub = FactoryGirl.build_stubbed(:user)
+
+# Passing a block to any of the methods above will yield the return object
+create(:user) do |user|
+  user.posts.create(attributes_for(:post))
+end
+```
+
+#### Aliases
+```ruby 
+factory :user, aliases: [:author, :commenter] do
+  first_name    "John"
+  last_name     "Doe"
+  date_of_birth { 18.years.ago }
+end
+
+factory :post do
+  author
+  # instead of
+  # association :author, factory: :user
+  title "How to read a book effectively"
+  body  "There are five steps involved."
+end
+
+factory :comment do
+  commenter
+  # instead of
+  # association :commenter, factory: :user
+  body "Great article!"
+end
+```
+
+#### Callbacks
+
+- after(:build) - called after a factory is built (via FactoryGirl.build, FactoryGirl.create)
+- before(:create) - called before a factory is saved (via FactoryGirl.create
+- after(:create) - called after a factory is saved (via FactoryGirl.create)
+- after(:stub) - called after a factory is stubbed (via FactoryGirl.build_stubbed)
+- Note: Calling create will invoke both after_build and after_create callbacks.
+```ruby
+# Define a factory that calls the generate_hashed_password method after it is built
+factory :user do
+  after(:build) { |user| generate_hashed_password(user) }
+end
+```
 
 ## Alternative factory gems (less popular):
 - [Fabrication](https://github.com/paulelliott/fabrication)
@@ -80,3 +138,4 @@ end
 ## References:
 - [Rails Testing Antipatterns: Fixtures and Factories](https://semaphoreci.com/blog/2014/01/14/rails-testing-antipatterns-fixtures-and-factories.html)
 - [Factories not Fixtures](http://railscasts.com/episodes/158-factories-not-fixtures-revised)
+- [Factory Girl Github](https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md)
