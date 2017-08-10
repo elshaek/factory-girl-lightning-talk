@@ -65,11 +65,8 @@ end
 ```
 - We know how user is set up
 - Can generate an instance and test it without having to remember details of predefined data
-- Note: build vs create
-    + Using FactoryGirl.build(:factory_name) does not persist to the db and does not call save!, so the ActiveRecord validations will not run: faster, but no validations
-    + Using FactoryGirl.create(:factory_name) will persist to the db and will call ActiveRecord validations: slower but can catch validation errors
 
-#### Using Factories
+## Using Factories
 ```ruby
 # Returns a User instance that's not saved
 # ActiveRecord validations will not run: faster, but no validations
@@ -91,7 +88,7 @@ create(:user) do |user|
 end
 ```
 
-#### Aliases
+## Aliases
 ```ruby 
 factory :user, aliases: [:author, :commenter] do
   first_name    "John"
@@ -115,7 +112,7 @@ factory :comment do
 end
 ```
 
-#### Callbacks
+## Callbacks
 
 - after(:build) - called after a factory is built (via FactoryGirl.build, FactoryGirl.create)
 - before(:create) - called before a factory is saved (via FactoryGirl.create
